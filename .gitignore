@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+*.env
+
+# Node.js
+node_modules/
+dist/
+build/
+
+# PostgreSQL
+*.sql
+*.backup
+
+# Otros
+.DS_Store
+*.log
