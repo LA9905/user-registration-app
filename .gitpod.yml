@@ -1,4 +1,16 @@
 tasks:
-  - init: sh /workspace/frontend/set-env.sh
+  - init: |
+      cd /workspace/user-registration-app/backend
+      pip install -r requirements.txt
+      echo "DATABASE_URL=postgresql://postgres:postgres@db:5432/users_db" > .env
+      cd /workspace/user-registration-app/frontend
+      npm install
+  - command: |
+      cd /workspace/user-registration-app/.devcontainer
+      docker-compose up -d
+      cd /workspace/user-registration-app/backend
+      python app.py &
+      cd /workspace/user-registration-app/frontend
+      npm start
 env:
   REACT_APP_API_URL: http://localhost:5000
