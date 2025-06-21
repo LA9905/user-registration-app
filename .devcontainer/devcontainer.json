@@ -12,9 +12,9 @@
             "name": "Container database",
             "driver": "PostgreSQL",
             "previewLimit": 50,
-            "server": "localhost",
+            "server": "db",
             "port": 5432,
-            "database": "mydatabase",
+            "database": "users_db",
             "username": "postgres",
             "password": "postgres"
           }
