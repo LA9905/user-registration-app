@@ -1,28 +1,35 @@
 # 👥 Mini App de Registro de Usuarios
 
-Una aplicación web fullstack de registro de usuarios desarrollada por Alejandro Arraga. Utiliza **Flask** como backend, **React** en el frontend y **PostgreSQL** como base de datos relacional.
+Una aplicación web fullstack de registro de usuarios desarrollada por Alejandro Arraga. Utiliza **Flask** como backend, **React** en el frontend y **PostgreSQL** como base de datos relacional. Esta aplicación puede ejecutarse de forma local en tu computadora o en entornos como **GitHub Codespaces** y **Gitpod**, adaptándose a diferentes configuraciones gracias a variables de entorno y scripts de automatización.
 
 ---
 
 ## 📦 Tecnologías Utilizadas
 
-| Categoría     | Tecnologías                                 |
-|---------------|----------------------------------------------|
-| Backend       | Flask · Python · psycopg2 · bcrypt           |
-| Frontend      | React · Axios · React Router DOM             |
-| Base de Datos | PostgreSQL                                   |
-| Herramientas  | Git · npm · pip · dotenv                     |
+| Categoría       | Tecnologías                          |
+|------------------|--------------------------------------|
+| Backend          | Flask · Python · psycopg2 · bcrypt   |
+| Frontend         | React · Axios · React Router DOM     |
+| Base de Datos    | PostgreSQL                           |
+| Herramientas     | Git · npm · pip · dotenv             |
 
 ---
 
 ## 🧰 Requisitos Previos
 
-Antes de comenzar, asegúrate de tener instalados:
+### Para ejecución local:
+- Python 3.x
+- Node.js y npm (v14 o superior)
+- PostgreSQL
+- Git
 
-- [Python 3.x](https://www.python.org/downloads/)
-- [Node.js y npm (v14 o superior)](https://nodejs.org/)
-- [PostgreSQL](https://www.postgresql.org/download/)
-- [Git](https://git-scm.com/downloads)
+### Para GitHub Codespaces:
+- Una cuenta de GitHub con acceso a Codespaces
+- No necesitas instalar nada localmente
+
+### Para Gitpod (opcional):
+- Una cuenta de Gitpod
+- No necesitas instalaciones locales
 
 ---
 
@@ -37,11 +44,14 @@ cd user-registration-app
 
 ---
 
-### 2️⃣ Configura PostgreSQL
+### 2️⃣ Configura el entorno
 
-1. Asegúrate de que PostgreSQL esté en ejecución:
-   - **Windows**: desde el Administrador de servicios.
-   - **Linux/Mac**:  
+#### 🔹 Para ejecución local:
+
+##### PostgreSQL:
+1. Asegúrate de que PostgreSQL esté en ejecución:  
+   - **Windows:** desde el Administrador de servicios  
+   - **Linux/Mac:**  
      ```bash
      sudo service postgresql start
      ```
@@ -51,7 +61,7 @@ cd user-registration-app
    psql -U postgres
    ```
 
-3. (Opcional) Establece una contraseña si aún no lo hiciste:
+3. (Opcional) Establece una contraseña:
    ```sql
    ALTER USER postgres WITH PASSWORD 'tu_contraseña';
    ```
@@ -66,78 +76,135 @@ cd user-registration-app
    \q
    ```
 
+#### 🔹 Para GitHub Codespaces:
+- PostgreSQL y los contenedores se configuran automáticamente.
+- La base de datos `users_db` se crea automáticamente al iniciar el contenedor gracias a `docker-compose.yml`.
+
+#### 🔹 Para Gitpod:
+- El entorno se configura automáticamente si está presente el archivo `.gitpod.yml`.
+
 ---
 
-### 3️⃣ Backend (Flask)
+### 3️⃣ Configura las variables de entorno
 
+#### Frontend (`frontend/.env`):
+
+##### Local:
+```env
+REACT_APP_API_URL=http://localhost:5000
+```
+
+##### Codespaces:
+```env
+REACT_APP_API_URL=https://<tu-codespace-id>-5000.app.github.dev
+```
+
+##### Gitpod:
+```env
+REACT_APP_API_URL=http://localhost:5000
+```
+
+#### Backend (`backend/.env`):
+
+##### Local:
+```env
+DATABASE_URL=postgresql://postgres:tu_contraseña@localhost:5432/users_db
+```
+
+##### Codespaces:
+```env
+DATABASE_URL=postgresql://postgres:postgres@db:5432/users_db
+```
+
+> 🔒 **Importante:** No subas archivos `.env` a repositorios públicos. Ya están incluidos en `.gitignore`.
+
+---
+
+### 4️⃣ Backend (Flask)
+
+#### Local:
 ```bash
 cd backend
 python -m venv venv
 ```
 
-#### Activa el entorno virtual:
-
-- **Windows**:
+##### Activa el entorno virtual:
+- **Windows:**
   ```bash
   .\venv\Scripts\Activate.ps1
   ```
-
-- **Linux/Mac**:
+- **Linux/Mac:**
   ```bash
   source venv/bin/activate
   ```
 
-#### Instala las dependencias:
-
+##### Instala dependencias:
 ```bash
 pip install -r requirements.txt
 ```
 
-#### Crea el archivo `.env` con la cadena de conexión a la base de datos:
-
-```env
-DATABASE_URL=postgresql://postgres:TU_CONTRASEÑA@localhost:5432/users_db
-```
-
-> 🔒 **Importante:** No compartas este archivo en repositorios públicos. Añádelo a `.gitignore`.
-
-#### Inicia el servidor backend:
-
+##### Inicia el servidor:
 ```bash
 python app.py
 ```
 
-El backend estará disponible en: `http://localhost:5000`
+Accede a: [http://localhost:5000](http://localhost:5000)
+
+#### Codespaces:
+- El backend se inicia automáticamente con `docker-compose.yml`.
+- Accede a la URL en la pestaña **Ports**, ejemplo:
+  ```
+  https://<tu-codespace-id>-5000.app.github.dev
+  ```
+
+#### Gitpod:
+- El backend se inicia automáticamente. Usa:
+  ```
+  http://localhost:5000
+  ```
 
 ---
 
-### 4️⃣ Frontend (React)
+### 5️⃣ Frontend (React)
 
-En una nueva terminal:
-
+#### Local:
 ```bash
 cd frontend
 npm install
-npm install axios react-router-dom
 npm start
 ```
 
-El frontend se ejecutará en: `http://localhost:3000`
+Accede a: [http://localhost:3000](http://localhost:3000)
+
+#### Codespaces:
+- El frontend se inicia automáticamente con `docker-compose.yml`.
+- Verifica que el puerto 3000 esté expuesto.
+- Accede mediante la pestaña **Ports**, ejemplo:
+  ```
+  https://<tu-codespace-id>-3000.app.github.dev
+  ```
+
+#### Gitpod:
+```bash
+cd frontend
+npm install
+npm start
+```
+
+Accede a: [http://localhost:3000](http://localhost:3000) o la URL proporcionada por Gitpod.
 
 ---
 
 ## 🧪 Uso de la Aplicación
 
 ### 📥 Registro
-
-1. Accede a `http://localhost:3000`
-2. Llena el formulario con tu nombre completo, correo electrónico y contraseña.
-3. Haz clic en **Registrar** para enviar los datos.
+1. Accede a la URL del frontend (según entorno).
+2. Llena el formulario con tu nombre completo, correo y contraseña.
+3. Haz clic en **Registrar**.
 
 ### 📋 Lista de Usuarios
-
-Navega a: `http://localhost:3000/users`  
-Verás una tabla con todos los usuarios registrados.
+Navega a: `/users`  
+Ejemplo: `http://localhost:3000/users`
 
 ---
 
@@ -145,7 +212,10 @@ Verás una tabla con todos los usuarios registrados.
 
 ### ➕ Crear usuario
 
-**POST** `http://localhost:5000/api/register`  
+**POST**  
+- Local: `http://localhost:5000/api/register`  
+- Codespaces: `https://<tu-codespace-id>-5000.app.github.dev/api/register`
+
 **Body (JSON):**
 ```json
 {
@@ -157,7 +227,8 @@ Verás una tabla con todos los usuarios registrados.
 
 ### 📤 Obtener usuarios
 
-**GET** `http://localhost:5000/api/users`
+- **Local:** `GET http://localhost:5000/api/users`
+- **Codespaces:** `GET https://<tu-codespace-id>-5000.app.github.dev/api/users`
 
 ---
 
@@ -174,10 +245,16 @@ user-registration-app/
 ├── frontend/
 │   ├── src/
 │   │   ├── components/
-│   │   │   ├── RegisterForm.js
-│   │   │   └── UserList.js
+│   │   │   ├── RegisterForm.jsx
+│   │   │   └── UserList.jsx
 │   │   └── App.js
-│   └── package.json
+│   ├── package.json
+│   └── .env              ← configuración del API URL (no subir)
+│
+├── .devcontainer/
+│   ├── devcontainer.json
+│   ├── docker-compose.yml
+│   └── Dockerfile
 │
 ├── .gitignore
 └── README.md
