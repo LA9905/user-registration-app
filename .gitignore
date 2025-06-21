@@ -19,4 +19,4 @@ build/
 
 # Otros
 .DS_Store
-*.log
+*.logfrontend/.env
