@@ -27,6 +27,5 @@
       ]
     }
   },
-  "forwardPorts": [5432],
-  "postStartCommand": "service postgresql start"
+  "forwardPorts": [5432]
 }
