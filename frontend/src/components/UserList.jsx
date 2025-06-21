@@ -5,7 +5,7 @@ function UserList() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/api/users')
+    axios.get(`${process.env.REACT_APP_API_URL}/api/users`)
       .then(response => setUsers(response.data))
       .catch(error => console.error('Error fetching users:', error));
   }, []);
